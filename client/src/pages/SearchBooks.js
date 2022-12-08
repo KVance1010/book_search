@@ -31,7 +31,6 @@ const SearchBooks = () => {
       }
 
       const { items } = await response.json();
-
       const bookData = items.map((book) => ({
         bookId: book.id,
         authors: book.volumeInfo.authors || ['No author to display'],
@@ -46,18 +45,23 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
-const [createBookSave, {error}] = useMutation(SAVE_BOOK); 
-  const handleSaveBook = async (bookId) => {
+const [savedBook, {error}] = useMutation(SAVE_BOOK); 
+  const handleSaveBook = async (searchedId) => {
+    const bookToSave = searchedBooks.find(book => searchedId === book.bookId);
+    console.log(bookToSave)
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+		if (!token) {
+			return false;
+		}
+    
     try {
-      const bookToSave = await createBookSave({
-        variables: {bookId:bookId}
+      const book = await savedBook({
+        variables: {book: bookToSave}
       });
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      setSavedBookIds( [...savedBookIds, book.bookId]); 
     }catch (err) {
       console.error(err);
     }
-      
-   
   };
 
   return (

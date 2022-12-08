@@ -5,15 +5,13 @@ export const QUERY_ME = gql`
 		me {
 			username
 			email
-			saveBooks {	
+			savedBooks {	
 				description
 				bookId
 				image
 				link
 				title
-				Author {
-					name
-				}
+				authors
 			}
 		}
 	}
