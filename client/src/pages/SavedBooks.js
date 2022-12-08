@@ -13,7 +13,7 @@ import { removeBookId } from '../utils/localStorage';
 import { useQuery, useMutation } from '@apollo/client';
 
 const SavedBooks = () => {
-	const { loading, data } = useQuery(QUERY_ME);
+	const { loading, data } = useQuery(QUERY_ME, {fetchPolicy: "no-cache"});
 	const savedBooks = data?.me.savedBooks || [];
 
 	const [deleteBook] = useMutation(DELETE_BOOK);
