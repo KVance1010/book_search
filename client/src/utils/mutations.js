@@ -46,3 +46,17 @@ export const DELETE_BOOK = gql`
     }
   }
 `;
+// export const DELETE_BOOK = gql`
+//   mutation deleteBook($book: BookInput) {
+//     deleteBook(book: $book) {
+//      savedBooks {
+//       description
+//       authors
+//       bookId
+//       image
+//       link
+//       title
+//      }
+//     }
+//   }
+// `;

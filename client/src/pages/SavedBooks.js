@@ -15,24 +15,25 @@ import { useQuery, useMutation } from '@apollo/client';
 const SavedBooks = () => {
 	const { loading, data } = useQuery(QUERY_ME);
 	const savedBooks = data?.me.savedBooks || [];
-console.log(savedBooks);
-console.log(data)
+
 	const [deleteBook] = useMutation(DELETE_BOOK);
 	const handleDeleteBook = async (bookId) => {
 		const token = Auth.loggedIn() ? Auth.getToken() : null;
 		if (!token) {
 			return false;
 		}
-console.log(bookId);
+
 		try {
-			await deleteBook(bookId);
+			await deleteBook({
+				variables: { bookId },
+			});
 			removeBookId(bookId);
+			window.location.reload();
 		} catch (err) {
 			console.error(err);
 		}
 	};
 
-	// if data isn't here yet, say so
 	if (loading) {
 		return <h2>LOADING...</h2>;
 	}
